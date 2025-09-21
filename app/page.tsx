@@ -74,9 +74,21 @@ export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const scrollToSection = (sectionId: string) => {
+    console.log("[v0] Attempting to scroll to section:", sectionId)
     const element = document.getElementById(sectionId)
+    console.log("[v0] Found element:", element)
+
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      const navHeight = 80 // Account for fixed navigation height
+      const elementPosition = element.offsetTop - navHeight
+      console.log("[v0] Element position:", elementPosition, "Nav height:", navHeight)
+
+      window.scrollTo({
+        top: elementPosition,
+        behavior: "smooth",
+      })
+    } else {
+      console.log("[v0] Element not found for ID:", sectionId)
     }
     setMobileMenuOpen(false)
   }
@@ -606,11 +618,11 @@ export default function HomePage() {
               <motion.div key={index} variants={itemVariants}>
                 <Card className="h-full bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/50 transition-all duration-300 group">
                   <CardContent className="p-6">
-                    <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/30 transition-colors">
+                    <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/30 transition-colors mx-auto sm:mx-0">
                       <feature.icon className="w-6 h-6 text-primary" />
                     </div>
-                    <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-                    <p className="text-muted-foreground text-pretty">{feature.description}</p>
+                    <h3 className="text-xl font-semibold mb-3 text-center sm:text-left">{feature.title}</h3>
+                    <p className="text-muted-foreground text-pretty text-center sm:text-left">{feature.description}</p>
                   </CardContent>
                 </Card>
               </motion.div>

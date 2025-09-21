@@ -337,13 +337,15 @@ export default function HomePage() {
               variants={itemVariants}
               className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
             >
-              <Button
-                size="lg"
-                className="text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 lg:py-6 animate-glow max-w-xs sm:max-w-none mx-auto sm:mx-0"
-              >
-                Get Started
-                <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
-              </Button>
+              <Link href="/signup">
+                <Button
+                  size="lg"
+                  className="text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 lg:py-6 animate-glow max-w-xs sm:max-w-none mx-auto sm:mx-0"
+                >
+                  Get Started
+                  <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
+                </Button>
+              </Link>
               <Button
                 size="lg"
                 variant="outline"

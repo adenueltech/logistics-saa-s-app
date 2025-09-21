@@ -20,9 +20,24 @@ import {
   X,
 } from "lucide-react"
 import Link from "next/link"
-import { Canvas } from "@react-three/fiber"
-import { OrbitControls, Environment, Float } from "@react-three/drei"
-import { Suspense, useState } from "react"
+import { useState } from "react"
+import dynamic from "next/dynamic"
+
+const Canvas = dynamic(() => import("@react-three/fiber").then((mod) => ({ default: mod.Canvas })), {
+  ssr: false,
+})
+
+const OrbitControls = dynamic(() => import("@react-three/drei").then((mod) => ({ default: mod.OrbitControls })), {
+  ssr: false,
+})
+
+const Environment = dynamic(() => import("@react-three/drei").then((mod) => ({ default: mod.Environment })), {
+  ssr: false,
+})
+
+const Float = dynamic(() => import("@react-three/drei").then((mod) => ({ default: mod.Float })), {
+  ssr: false,
+})
 
 function TruckModel() {
   return (
@@ -348,40 +363,114 @@ export default function HomePage() {
             transition={{ duration: 1, delay: 0.3 }}
             className="relative h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[500px] order-first lg:order-last"
           >
-            <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
-              <Suspense fallback={null}>
-                <Environment preset="night" />
-                <ambientLight intensity={0.5} />
-                <pointLight position={[10, 10, 10]} intensity={1} color="#ff6633" />
-                <TruckModel />
-                <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={2} />
-              </Suspense>
-            </Canvas>
+            <div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl flex items-center justify-center relative overflow-hidden">
+              {/* Animated Truck */}
+              <motion.div
+                animate={{
+                  x: [0, 20, 0, -20, 0],
+                  y: [0, -10, 0, -5, 0],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                }}
+                className="relative z-10"
+              >
+                <Truck className="w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 text-primary" />
+              </motion.div>
 
-            <div className="absolute top-2 sm:top-4 lg:top-10 right-2 sm:right-4 lg:right-10 animate-float">
-              <div className="bg-card border border-border rounded-lg p-2 sm:p-3 shadow-lg">
-                <div className="flex items-center space-x-1 sm:space-x-2">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-pulse" />
-                  <span className="text-xs sm:text-sm whitespace-nowrap">Shipment Efficiency</span>
-                </div>
-              </div>
-            </div>
+              {/* Floating Text Elements */}
+              <motion.div
+                animate={{
+                  y: [0, -15, 0],
+                  opacity: [0.7, 1, 0.7],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                }}
+                className="absolute top-8 left-8 bg-card/80 backdrop-blur-sm rounded-lg px-3 py-2 text-xs sm:text-sm font-medium border border-primary/20"
+              >
+                Real-time Tracking
+              </motion.div>
 
-            <div className="absolute bottom-8 sm:bottom-10 lg:bottom-20 left-2 sm:left-4 lg:left-10 animate-float delay-1000">
-              <div className="bg-card border border-border rounded-lg p-2 sm:p-3 shadow-lg">
-                <div className="flex items-center space-x-1 sm:space-x-2">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full animate-pulse" />
-                  <span className="text-xs sm:text-sm whitespace-nowrap">Driver Compliance</span>
-                </div>
-              </div>
-            </div>
+              <motion.div
+                animate={{
+                  y: [0, -12, 0],
+                  opacity: [0.6, 1, 0.6],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                  delay: 1,
+                }}
+                className="absolute top-16 right-8 bg-card/80 backdrop-blur-sm rounded-lg px-3 py-2 text-xs sm:text-sm font-medium border border-accent/20"
+              >
+                Route Optimization
+              </motion.div>
 
-            <div className="absolute top-1/2 left-0 animate-float delay-500">
-              <div className="bg-card border border-border rounded-lg p-2 sm:p-3 shadow-lg">
-                <div className="flex items-center space-x-1 sm:space-x-2">
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full animate-pulse" />
-                  <span className="text-xs sm:text-sm whitespace-nowrap">Vehicle & Route</span>
-                </div>
+              <motion.div
+                animate={{
+                  y: [0, -10, 0],
+                  opacity: [0.8, 1, 0.8],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                  delay: 2,
+                }}
+                className="absolute bottom-16 left-12 bg-card/80 backdrop-blur-sm rounded-lg px-3 py-2 text-xs sm:text-sm font-medium border border-primary/20"
+              >
+                Fleet Management
+              </motion.div>
+
+              <motion.div
+                animate={{
+                  y: [0, -8, 0],
+                  opacity: [0.7, 1, 0.7],
+                }}
+                transition={{
+                  duration: 3.5,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                  delay: 0.5,
+                }}
+                className="absolute bottom-8 right-12 bg-card/80 backdrop-blur-sm rounded-lg px-3 py-2 text-xs sm:text-sm font-medium border border-accent/20"
+              >
+                Analytics
+              </motion.div>
+
+              {/* Background Animation Lines */}
+              <div className="absolute inset-0">
+                <motion.div
+                  animate={{
+                    pathLength: [0, 1, 0],
+                    opacity: [0, 0.5, 0],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "easeInOut",
+                  }}
+                  className="absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent"
+                />
+                <motion.div
+                  animate={{
+                    pathLength: [0, 1, 0],
+                    opacity: [0, 0.3, 0],
+                  }}
+                  transition={{
+                    duration: 5,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "easeInOut",
+                    delay: 1,
+                  }}
+                  className="absolute top-1/3 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-accent/20 to-transparent"
+                />
               </div>
             </div>
           </motion.div>

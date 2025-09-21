@@ -14,6 +14,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Shield, CreditCard, Key, Save, Upload, Plus } from "lucide-react"
 import { useAuth } from "@/lib/auth"
 
+export const dynamic = "force-dynamic"
+
 export default function SettingsPage() {
   const { user } = useAuth()
 

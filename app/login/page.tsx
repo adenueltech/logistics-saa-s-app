@@ -15,6 +15,8 @@ import { useAuth } from "@/lib/auth"
 import { useRouter } from "next/navigation"
 import { useToast } from "@/hooks/use-toast"
 
+export const dynamic = "force-dynamic"
+
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState("")

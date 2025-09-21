@@ -23,6 +23,8 @@ import { AuthGuard } from "@/components/auth-guard"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { useAuth } from "@/lib/auth"
 
+export const dynamic = "force-dynamic"
+
 export default function DashboardPage() {
   const { user } = useAuth()
 

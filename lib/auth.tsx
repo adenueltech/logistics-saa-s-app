@@ -45,30 +45,45 @@ export function useAuth() {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!mounted) return
+
     // Check for existing session on mount
     const checkAuth = async () => {
       try {
+        if (typeof window === "undefined") return
+
         const token = localStorage.getItem("fleetflow_token")
+        console.log("[v0] Auth check - token found:", !!token)
+
         if (token) {
           // In a real app, validate token with backend
           const userData = localStorage.getItem("fleetflow_user")
           if (userData) {
-            setUser(JSON.parse(userData))
+            const parsedUser = JSON.parse(userData)
+            console.log("[v0] Auth check - user loaded:", parsedUser)
+            setUser(parsedUser)
           }
         }
       } catch (error) {
-        console.error("Auth check failed:", error)
-        localStorage.removeItem("fleetflow_token")
-        localStorage.removeItem("fleetflow_user")
+        console.error("[v0] Auth check failed:", error)
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("fleetflow_token")
+          localStorage.removeItem("fleetflow_user")
+        }
       } finally {
         setLoading(false)
       }
     }
 
     checkAuth()
-  }, [])
+  }, [mounted])
 
   const login = async (email: string, password: string) => {
     try {
@@ -88,13 +103,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         createdAt: new Date().toISOString(),
       }
 
-      // Store auth data
-      localStorage.setItem("fleetflow_token", "mock_jwt_token")
-      localStorage.setItem("fleetflow_user", JSON.stringify(mockUser))
+      if (typeof window !== "undefined") {
+        localStorage.setItem("fleetflow_token", "mock_jwt_token")
+        localStorage.setItem("fleetflow_user", JSON.stringify(mockUser))
+      }
 
       setUser(mockUser)
+      console.log("[v0] Login successful:", mockUser)
       return { success: true }
     } catch (error) {
+      console.error("[v0] Login failed:", error)
       return { success: false, error: "Invalid credentials" }
     } finally {
       setLoading(false)
@@ -118,13 +136,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         createdAt: new Date().toISOString(),
       }
 
-      // Store auth data
-      localStorage.setItem("fleetflow_token", "mock_jwt_token")
-      localStorage.setItem("fleetflow_user", JSON.stringify(newUser))
+      if (typeof window !== "undefined") {
+        localStorage.setItem("fleetflow_token", "mock_jwt_token")
+        localStorage.setItem("fleetflow_user", JSON.stringify(newUser))
+      }
 
       setUser(newUser)
+      console.log("[v0] Signup successful:", newUser)
       return { success: true }
     } catch (error) {
+      console.error("[v0] Signup failed:", error)
       return { success: false, error: "Registration failed" }
     } finally {
       setLoading(false)
@@ -132,8 +153,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const logout = () => {
-    localStorage.removeItem("fleetflow_token")
-    localStorage.removeItem("fleetflow_user")
+    console.log("[v0] Logout called")
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("fleetflow_token")
+      localStorage.removeItem("fleetflow_user")
+    }
     setUser(null)
   }
 
@@ -142,13 +166,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (!user) return { success: false, error: "Not authenticated" }
 
       const updatedUser = { ...user, ...data }
-      localStorage.setItem("fleetflow_user", JSON.stringify(updatedUser))
-      setUser(updatedUser)
 
+      if (typeof window !== "undefined") {
+        localStorage.setItem("fleetflow_user", JSON.stringify(updatedUser))
+      }
+
+      setUser(updatedUser)
       return { success: true }
     } catch (error) {
       return { success: false, error: "Update failed" }
     }
+  }
+
+  if (!mounted) {
+    return <div>{children}</div>
   }
 
   const value: AuthContextType = {

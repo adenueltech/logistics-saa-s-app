@@ -25,11 +25,11 @@ export default function SettingsPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between"
+        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
       >
-        <div>
-          <h1 className="text-3xl font-bold">Settings</h1>
-          <p className="text-muted-foreground">Manage your account and application preferences</p>
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold text-balance">Settings</h1>
+          <p className="text-muted-foreground text-sm sm:text-base">Manage your account and application preferences</p>
         </div>
       </motion.div>
 
@@ -38,13 +38,13 @@ export default function SettingsPage() {
         <Card className="bg-card/50 backdrop-blur-sm border-border/50">
           <CardContent className="p-6">
             <Tabs defaultValue="profile" className="w-full">
-              <TabsList className="grid w-full grid-cols-6">
-                <TabsTrigger value="profile">Profile</TabsTrigger>
-                <TabsTrigger value="notifications">Notifications</TabsTrigger>
-                <TabsTrigger value="security">Security</TabsTrigger>
-                <TabsTrigger value="appearance">Appearance</TabsTrigger>
-                <TabsTrigger value="company">Company</TabsTrigger>
-                <TabsTrigger value="billing">Billing</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 h-auto p-1">
+                <TabsTrigger value="profile" className="text-xs sm:text-sm">Profile</TabsTrigger>
+                <TabsTrigger value="notifications" className="text-xs sm:text-sm">Notifications</TabsTrigger>
+                <TabsTrigger value="security" className="text-xs sm:text-sm hidden sm:inline-flex">Security</TabsTrigger>
+                <TabsTrigger value="appearance" className="text-xs sm:text-sm hidden lg:inline-flex">Appearance</TabsTrigger>
+                <TabsTrigger value="company" className="text-xs sm:text-sm hidden lg:inline-flex">Company</TabsTrigger>
+                <TabsTrigger value="billing" className="text-xs sm:text-sm hidden lg:inline-flex">Billing</TabsTrigger>
               </TabsList>
 
               {/* Profile Settings */}

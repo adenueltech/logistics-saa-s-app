@@ -67,11 +67,11 @@ export default function AnalyticsPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between"
+        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
       >
-        <div>
-          <h1 className="text-3xl font-bold">Analytics Dashboard</h1>
-          <p className="text-muted-foreground">Comprehensive insights into your logistics operations</p>
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold text-balance">Analytics Dashboard</h1>
+          <p className="text-muted-foreground text-sm sm:text-base">Comprehensive insights into your logistics operations</p>
         </div>
       </motion.div>
 
@@ -151,11 +151,11 @@ export default function AnalyticsPage() {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="deliveries" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="deliveries">Deliveries</TabsTrigger>
-                <TabsTrigger value="performance">Performance</TabsTrigger>
-                <TabsTrigger value="routes">Routes</TabsTrigger>
-                <TabsTrigger value="costs">Costs</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto p-1">
+                <TabsTrigger value="deliveries" className="text-xs sm:text-sm">Deliveries</TabsTrigger>
+                <TabsTrigger value="performance" className="text-xs sm:text-sm">Performance</TabsTrigger>
+                <TabsTrigger value="routes" className="text-xs sm:text-sm">Routes</TabsTrigger>
+                <TabsTrigger value="costs" className="text-xs sm:text-sm">Costs</TabsTrigger>
               </TabsList>
 
               <TabsContent value="deliveries" className="space-y-4">

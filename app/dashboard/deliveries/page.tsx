@@ -152,15 +152,15 @@ function DeliveriesContent() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="flex items-center justify-between"
+        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
       >
-        <div>
-          <h1 className="text-3xl font-bold text-balance">Deliveries</h1>
-          <p className="text-muted-foreground mt-2">Manage and track all your delivery operations</p>
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold text-balance">Deliveries</h1>
+          <p className="text-muted-foreground mt-2 text-sm sm:text-base">Manage and track all your delivery operations</p>
         </div>
         <Dialog open={showCreateForm} onOpenChange={setShowCreateForm}>
           <DialogTrigger asChild>
-            <Button className="animate-glow">
+            <Button className="animate-glow flex-shrink-0">
               <Plus className="mr-2 h-4 w-4" />
               New Delivery
             </Button>
@@ -185,7 +185,7 @@ function DeliveriesContent() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="flex items-center space-x-4"
+        className="flex flex-col sm:flex-row gap-4"
       >
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -196,7 +196,7 @@ function DeliveriesContent() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <Button variant="outline" className="bg-transparent">
+        <Button variant="outline" className="bg-transparent flex-shrink-0">
           <Filter className="mr-2 h-4 w-4" />
           Filter
         </Button>
@@ -219,53 +219,53 @@ function DeliveriesContent() {
               transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
             >
               <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-300">
-                <CardContent className="p-6">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-start space-x-4">
-                      <div className="p-2 rounded-lg bg-primary/10">
-                        <StatusIcon className="h-5 w-5 text-primary" />
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                    <div className="flex items-start space-x-3 sm:space-x-4 min-w-0 flex-1">
+                      <div className="p-2 rounded-lg bg-primary/10 flex-shrink-0">
+                        <StatusIcon className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                       </div>
-                      <div className="space-y-2">
-                        <div className="flex items-center space-x-3">
-                          <h3 className="font-semibold">{delivery.id}</h3>
+                      <div className="space-y-2 min-w-0 flex-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h3 className="font-semibold text-sm sm:text-base">{delivery.id}</h3>
                           <Badge className={getStatusColor(delivery.status)}>{delivery.status}</Badge>
                           <Badge className={getPriorityColor(delivery.priority)}>{delivery.priority} priority</Badge>
                           {delivery.package.fragile && (
                             <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30">fragile</Badge>
                           )}
                         </div>
-                        <p className="text-sm font-medium">
+                        <p className="text-sm font-medium truncate">
                           {delivery.customer.name} • {delivery.customer.company}
                         </p>
                         <div className="space-y-1 text-sm text-muted-foreground">
                           <div className="flex items-center">
-                            <MapPin className="mr-2 h-3 w-3" />
-                            <span>From: {delivery.pickup.address}</span>
+                            <MapPin className="mr-2 h-3 w-3 flex-shrink-0" />
+                            <span className="truncate">From: {delivery.pickup.address}</span>
                           </div>
                           <div className="flex items-center">
-                            <MapPin className="mr-2 h-3 w-3" />
-                            <span>To: {delivery.destination.address}</span>
+                            <MapPin className="mr-2 h-3 w-3 flex-shrink-0" />
+                            <span className="truncate">To: {delivery.destination.address}</span>
                           </div>
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex items-center space-x-4">
-                      <div className="text-right space-y-2">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-4">
+                      <div className="text-left sm:text-right space-y-1 sm:space-y-2 order-2 sm:order-1">
                         {delivery.assignedDriver && (
                           <div className="flex items-center text-sm text-muted-foreground">
-                            <User className="mr-1 h-3 w-3" />
-                            {delivery.assignedDriver}
+                            <User className="mr-1 h-3 w-3 flex-shrink-0" />
+                            <span className="truncate">{delivery.assignedDriver}</span>
                           </div>
                         )}
                         {delivery.assignedVehicle && (
                           <div className="flex items-center text-sm text-muted-foreground">
-                            <Truck className="mr-1 h-3 w-3" />
-                            {delivery.assignedVehicle}
+                            <Truck className="mr-1 h-3 w-3 flex-shrink-0" />
+                            <span className="truncate">{delivery.assignedVehicle}</span>
                           </div>
                         )}
                         <div className="flex items-center text-sm text-muted-foreground">
-                          <Clock className="mr-1 h-3 w-3" />
+                          <Clock className="mr-1 h-3 w-3 flex-shrink-0" />
                           {new Date(delivery.scheduledPickup).toLocaleDateString()}
                         </div>
                         <p className="text-sm font-medium">${delivery.cost}</p>
@@ -273,7 +273,7 @@ function DeliveriesContent() {
 
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="sm">
+                          <Button variant="ghost" size="sm" className="flex-shrink-0 order-1 sm:order-2">
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>

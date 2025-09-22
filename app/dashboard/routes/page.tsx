@@ -120,17 +120,17 @@ export default function RoutesPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Route Optimization</h1>
-          <p className="text-muted-foreground">Optimize delivery routes for maximum efficiency</p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground text-balance">Route Optimization</h1>
+          <p className="text-muted-foreground text-sm sm:text-base">Optimize delivery routes for maximum efficiency</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline">
+        <div className="flex flex-col sm:flex-row gap-2 flex-shrink-0">
+          <Button variant="outline" className="flex-shrink-0">
             <Plus className="h-4 w-4 mr-2" />
             New Route
           </Button>
-          <Button onClick={handleOptimizeRoutes} disabled={optimizing} className="bg-primary hover:bg-primary/90">
+          <Button onClick={handleOptimizeRoutes} disabled={optimizing} className="bg-primary hover:bg-primary/90 flex-shrink-0">
             {optimizing ? <RefreshCw className="h-4 w-4 mr-2 animate-spin" /> : <Zap className="h-4 w-4 mr-2" />}
             {optimizing ? "Optimizing..." : "Optimize All"}
           </Button>

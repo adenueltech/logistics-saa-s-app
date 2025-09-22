@@ -103,12 +103,12 @@ export default function PaymentsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Payments</h1>
-          <p className="text-muted-foreground">Manage delivery payments and invoices</p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground text-balance">Payments</h1>
+          <p className="text-muted-foreground text-sm sm:text-base">Manage delivery payments and invoices</p>
         </div>
-        <Button className="bg-primary hover:bg-primary/90">
+        <Button className="bg-primary hover:bg-primary/90 flex-shrink-0">
           <Download className="h-4 w-4 mr-2" />
           Export Report
         </Button>

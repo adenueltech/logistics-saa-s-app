@@ -165,46 +165,31 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           {/* User Profile */}
           <div className="p-2 sm:p-4 border-t border-border/50">
             {mounted && user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="w-full justify-start p-2 h-auto">
-                    <Avatar className="h-6 w-6 sm:h-8 sm:w-8 mr-2 sm:mr-3 flex-shrink-0">
-                      <AvatarImage src={user?.avatar || "/placeholder.svg"} />
-                      <AvatarFallback className="bg-primary/20 text-primary text-xs">
-                        {user?.firstName?.[0]}
-                        {user?.lastName?.[0]}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="text-left min-w-0 flex-1">
-                      <p className="text-xs sm:text-sm font-medium truncate">
-                        {user?.firstName} {user?.lastName}
-                      </p>
-                      <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
-                    </div>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <User className="mr-2 h-4 w-4" />
-                    Profile
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Settings className="mr-2 h-4 w-4" />
-                    Settings
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <HelpCircle className="mr-2 h-4 w-4" />
-                    Help & Support
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout} className="text-red-400">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Sign out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <div className="space-y-2">
+                <div className="flex items-center space-x-3 p-2">
+                  <Avatar className="h-6 w-6 sm:h-8 sm:w-8 flex-shrink-0">
+                    <AvatarImage src={user?.avatar || "/placeholder.svg"} />
+                    <AvatarFallback className="bg-primary/20 text-primary text-xs">
+                      {user?.firstName?.[0]}
+                      {user?.lastName?.[0]}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="text-left min-w-0 flex-1">
+                    <p className="text-xs sm:text-sm font-medium truncate">
+                      {user?.firstName} {user?.lastName}
+                    </p>
+                    <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start p-2 h-auto text-red-400 hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950"
+                  onClick={handleLogout}
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Sign out
+                </Button>
+              </div>
             ) : (
               <div className="w-full p-2 h-12 bg-secondary/50 rounded-lg animate-pulse" />
             )}

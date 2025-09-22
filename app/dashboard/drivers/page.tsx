@@ -135,13 +135,13 @@ export default function DriversPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between"
+        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
       >
-        <div>
-          <h1 className="text-3xl font-bold">Driver Management</h1>
-          <p className="text-muted-foreground">Manage your delivery team and track performance</p>
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold text-balance">Driver Management</h1>
+          <p className="text-muted-foreground text-sm sm:text-base">Manage your delivery team and track performance</p>
         </div>
-        <Button className="bg-primary hover:bg-primary/90">
+        <Button className="bg-primary hover:bg-primary/90 flex-shrink-0">
           <Plus className="w-4 h-4 mr-2" />
           Add Driver
         </Button>
@@ -211,12 +211,12 @@ export default function DriversPage() {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="all" className="w-full">
-              <TabsList className="grid w-full grid-cols-5">
-                <TabsTrigger value="all">All Drivers</TabsTrigger>
-                <TabsTrigger value="active">Active</TabsTrigger>
-                <TabsTrigger value="idle">Idle</TabsTrigger>
-                <TabsTrigger value="break">On Break</TabsTrigger>
-                <TabsTrigger value="off-duty">Off Duty</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 h-auto p-1">
+                <TabsTrigger value="all" className="text-xs sm:text-sm">All</TabsTrigger>
+                <TabsTrigger value="active" className="text-xs sm:text-sm">Active</TabsTrigger>
+                <TabsTrigger value="idle" className="text-xs sm:text-sm hidden sm:inline-flex">Idle</TabsTrigger>
+                <TabsTrigger value="break" className="text-xs sm:text-sm hidden lg:inline-flex">Break</TabsTrigger>
+                <TabsTrigger value="off-duty" className="text-xs sm:text-sm hidden lg:inline-flex">Off Duty</TabsTrigger>
               </TabsList>
 
               <TabsContent value="all" className="space-y-4">
@@ -229,76 +229,69 @@ export default function DriversPage() {
                       transition={{ delay: index * 0.1 }}
                       className="p-4 rounded-lg border border-border/50 bg-secondary/20 hover:bg-secondary/30 transition-colors"
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4">
-                          <Avatar className="h-12 w-12">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div className="flex items-center space-x-3 sm:space-x-4 min-w-0 flex-1">
+                          <Avatar className="h-10 w-10 sm:h-12 sm:w-12 flex-shrink-0">
                             <AvatarImage src={driver.avatar || "/placeholder.svg"} />
-                            <AvatarFallback className="bg-primary/20 text-primary">
+                            <AvatarFallback className="bg-primary/20 text-primary text-xs sm:text-sm">
                               {driver.name
                                 .split(" ")
                                 .map((n) => n[0])
                                 .join("")}
                             </AvatarFallback>
                           </Avatar>
-                          <div>
-                            <h3 className="font-semibold">{driver.name}</h3>
-                            <p className="text-sm text-muted-foreground">
+                          <div className="min-w-0 flex-1">
+                            <h3 className="font-semibold text-sm sm:text-base truncate">{driver.name}</h3>
+                            <p className="text-xs sm:text-sm text-muted-foreground truncate">
                               {driver.id} • {driver.experience} experience
                             </p>
                           </div>
                         </div>
 
-                        <div className="flex items-center space-x-6">
-                          <div className="text-center">
-                            <Badge className={getStatusColor(driver.status)}>
-                              {getStatusIcon(driver.status)}
-                              <span className="ml-1 capitalize">{driver.status.replace("-", " ")}</span>
-                            </Badge>
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+                          <Badge className={`${getStatusColor(driver.status)} text-xs`}>
+                            {getStatusIcon(driver.status)}
+                            <span className="ml-1 capitalize hidden sm:inline">{driver.status.replace("-", " ")}</span>
+                          </Badge>
+
+                          <div className="text-center hidden sm:block">
+                            <p className="text-sm font-medium truncate max-w-24">{driver.vehicle}</p>
+                            <p className="text-xs text-muted-foreground">Vehicle</p>
                           </div>
 
-                          <div className="text-center">
-                            <p className="text-sm font-medium">{driver.vehicle}</p>
-                            <p className="text-xs text-muted-foreground">Assigned Vehicle</p>
+                          <div className="flex items-center space-x-1">
+                            <Star className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 fill-current flex-shrink-0" />
+                            <span className="text-xs sm:text-sm font-medium">{driver.rating}</span>
                           </div>
 
-                          <div className="text-center">
-                            <div className="flex items-center space-x-1">
-                              <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                              <span className="text-sm font-medium">{driver.rating}</span>
-                            </div>
-                            <p className="text-xs text-muted-foreground">Rating</p>
-                          </div>
-
-                          <div className="text-center">
+                          <div className="text-center hidden md:block">
                             <p className="text-sm font-medium">{driver.deliveries}</p>
                             <p className="text-xs text-muted-foreground">Deliveries</p>
                           </div>
 
-                          <div className="text-center">
-                            <div className="flex items-center space-x-2">
-                              <MapPin className="w-4 h-4 text-muted-foreground" />
-                              <span className="text-sm">{driver.location}</span>
-                            </div>
+                          <div className="flex items-center space-x-1 min-w-0">
+                            <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground flex-shrink-0" />
+                            <span className="text-xs sm:text-sm truncate max-w-20 sm:max-w-none">{driver.location}</span>
                           </div>
 
-                          <div className="flex items-center space-x-2">
-                            <Button variant="ghost" size="sm">
-                              <Phone className="w-4 h-4" />
+                          <div className="flex items-center space-x-1">
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                              <Phone className="w-3 h-3 sm:w-4 sm:h-4" />
                             </Button>
-                            <Button variant="ghost" size="sm">
-                              <Mail className="w-4 h-4" />
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                              <Mail className="w-3 h-3 sm:w-4 sm:h-4" />
                             </Button>
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="sm">
-                                  <MoreHorizontal className="w-4 h-4" />
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <MoreHorizontal className="w-3 h-3 sm:w-4 sm:h-4" />
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
-                                <DropdownMenuItem>View Profile</DropdownMenuItem>
-                                <DropdownMenuItem>Edit Driver</DropdownMenuItem>
-                                <DropdownMenuItem>Assign Vehicle</DropdownMenuItem>
-                                <DropdownMenuItem>View Performance</DropdownMenuItem>
+                                <DropdownMenuItem className="text-xs sm:text-sm">View Profile</DropdownMenuItem>
+                                <DropdownMenuItem className="text-xs sm:text-sm">Edit Driver</DropdownMenuItem>
+                                <DropdownMenuItem className="text-xs sm:text-sm">Assign Vehicle</DropdownMenuItem>
+                                <DropdownMenuItem className="text-xs sm:text-sm">View Performance</DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
                           </div>

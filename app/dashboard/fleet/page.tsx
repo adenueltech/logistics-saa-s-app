@@ -113,13 +113,13 @@ export default function FleetPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between"
+        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
       >
-        <div>
-          <h1 className="text-3xl font-bold">Fleet Management</h1>
-          <p className="text-muted-foreground">Monitor and manage your vehicle fleet</p>
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold text-balance">Fleet Management</h1>
+          <p className="text-muted-foreground text-sm sm:text-base">Monitor and manage your vehicle fleet</p>
         </div>
-        <Button className="bg-primary hover:bg-primary/90">
+        <Button className="bg-primary hover:bg-primary/90 flex-shrink-0">
           <Plus className="w-4 h-4 mr-2" />
           Add Vehicle
         </Button>
@@ -189,11 +189,11 @@ export default function FleetPage() {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="all" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="all">All Vehicles</TabsTrigger>
-                <TabsTrigger value="active">Active</TabsTrigger>
-                <TabsTrigger value="maintenance">Maintenance</TabsTrigger>
-                <TabsTrigger value="idle">Idle</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto p-1">
+                <TabsTrigger value="all" className="text-xs sm:text-sm">All</TabsTrigger>
+                <TabsTrigger value="active" className="text-xs sm:text-sm">Active</TabsTrigger>
+                <TabsTrigger value="maintenance" className="text-xs sm:text-sm">Maintenance</TabsTrigger>
+                <TabsTrigger value="idle" className="text-xs sm:text-sm">Idle</TabsTrigger>
               </TabsList>
 
               <TabsContent value="all" className="space-y-4">
@@ -206,63 +206,56 @@ export default function FleetPage() {
                       transition={{ delay: index * 0.1 }}
                       className="p-4 rounded-lg border border-border/50 bg-secondary/20 hover:bg-secondary/30 transition-colors"
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4">
-                          <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
-                            <Truck className="w-6 h-6 text-primary" />
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div className="flex items-center space-x-3 sm:space-x-4 min-w-0 flex-1">
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <Truck className="w-4 h-4 sm:w-6 sm:h-6 text-primary" />
                           </div>
-                          <div>
-                            <h3 className="font-semibold">{vehicle.name}</h3>
-                            <p className="text-sm text-muted-foreground">
+                          <div className="min-w-0 flex-1">
+                            <h3 className="font-semibold text-sm sm:text-base truncate">{vehicle.name}</h3>
+                            <p className="text-xs sm:text-sm text-muted-foreground truncate">
                               {vehicle.id} • {vehicle.type}
                             </p>
                           </div>
                         </div>
 
-                        <div className="flex items-center space-x-6">
-                          <div className="text-center">
-                            <Badge className={getStatusColor(vehicle.status)}>
-                              {getStatusIcon(vehicle.status)}
-                              <span className="ml-1 capitalize">{vehicle.status}</span>
-                            </Badge>
-                          </div>
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+                          <Badge className={`${getStatusColor(vehicle.status)} text-xs`}>
+                            {getStatusIcon(vehicle.status)}
+                            <span className="ml-1 capitalize hidden sm:inline">{vehicle.status}</span>
+                          </Badge>
 
-                          <div className="text-center">
-                            <p className="text-sm font-medium">{vehicle.driver}</p>
+                          <div className="text-center hidden sm:block">
+                            <p className="text-sm font-medium truncate max-w-20">{vehicle.driver}</p>
                             <p className="text-xs text-muted-foreground">Driver</p>
                           </div>
 
-                          <div className="text-center">
-                            <div className="flex items-center space-x-2">
-                              <Fuel className="w-4 h-4 text-muted-foreground" />
-                              <span className="text-sm font-medium">{vehicle.fuel}%</span>
-                            </div>
-                            <Progress value={vehicle.fuel} className="w-16 h-2 mt-1" />
+                          <div className="flex items-center space-x-1">
+                            <Fuel className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground flex-shrink-0" />
+                            <span className="text-xs sm:text-sm font-medium">{vehicle.fuel}%</span>
                           </div>
 
-                          <div className="text-center">
+                          <div className="text-center hidden md:block">
                             <p className="text-sm font-medium">{vehicle.mileage}</p>
                             <p className="text-xs text-muted-foreground">Mileage</p>
                           </div>
 
-                          <div className="text-center">
-                            <div className="flex items-center space-x-2">
-                              <MapPin className="w-4 h-4 text-muted-foreground" />
-                              <span className="text-sm">{vehicle.location}</span>
-                            </div>
+                          <div className="flex items-center space-x-1 min-w-0">
+                            <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground flex-shrink-0" />
+                            <span className="text-xs sm:text-sm truncate max-w-20 sm:max-w-none">{vehicle.location}</span>
                           </div>
 
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                              <Button variant="ghost" size="sm">
-                                <MoreHorizontal className="w-4 h-4" />
+                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0 flex-shrink-0">
+                                <MoreHorizontal className="w-3 h-3 sm:w-4 sm:h-4" />
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                              <DropdownMenuItem>View Details</DropdownMenuItem>
-                              <DropdownMenuItem>Edit Vehicle</DropdownMenuItem>
-                              <DropdownMenuItem>Schedule Maintenance</DropdownMenuItem>
-                              <DropdownMenuItem>Assign Driver</DropdownMenuItem>
+                              <DropdownMenuItem className="text-xs sm:text-sm">View Details</DropdownMenuItem>
+                              <DropdownMenuItem className="text-xs sm:text-sm">Edit Vehicle</DropdownMenuItem>
+                              <DropdownMenuItem className="text-xs sm:text-sm">Schedule Maintenance</DropdownMenuItem>
+                              <DropdownMenuItem className="text-xs sm:text-sm">Assign Driver</DropdownMenuItem>
                             </DropdownMenuContent>
                           </DropdownMenu>
                         </div>

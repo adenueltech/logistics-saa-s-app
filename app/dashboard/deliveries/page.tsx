@@ -44,6 +44,8 @@ import { DeliveryProvider, useDelivery } from "@/lib/delivery"
 import { DeliveryForm } from "@/components/delivery-form"
 import { useToast } from "@/hooks/use-toast"
 
+export const dynamic = "force-dynamic"
+
 function DeliveriesContent() {
   const { deliveries, deleteDelivery, updateDeliveryStatus } = useDelivery()
   const { toast } = useToast()

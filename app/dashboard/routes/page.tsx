@@ -26,6 +26,8 @@ import {
 } from "lucide-react"
 import { type OptimizedRoute, type RouteAnalytics, routeOptimizationService } from "@/lib/route-optimization"
 
+export const dynamic = "force-dynamic"
+
 export default function RoutesPage() {
   const [routes, setRoutes] = useState<OptimizedRoute[]>([])
   const [analytics, setAnalytics] = useState<RouteAnalytics | null>(null)

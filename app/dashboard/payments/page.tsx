@@ -22,6 +22,8 @@ import {
 } from "lucide-react"
 import { type Payment, type Invoice, paymentService } from "@/lib/payment"
 
+export const dynamic = "force-dynamic"
+
 export default function PaymentsPage() {
   const [payments, setPayments] = useState<Payment[]>([])
   const [invoices, setInvoices] = useState<Invoice[]>([])

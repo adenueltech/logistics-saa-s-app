@@ -10,6 +10,8 @@ import { DashboardLayout } from "@/components/dashboard-layout"
 import { InteractiveMap } from "@/components/interactive-map"
 import { TrackingProvider, useTracking } from "@/lib/tracking"
 
+export const dynamic = "force-dynamic"
+
 function TrackingContent() {
   const { vehicles, isConnected } = useTracking()
 

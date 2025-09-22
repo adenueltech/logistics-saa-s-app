@@ -22,6 +22,8 @@ import {
 } from "recharts"
 import { TrendingUp, TrendingDown, Package, DollarSign, Clock, Fuel, Star } from "lucide-react"
 
+export const dynamic = "force-dynamic"
+
 const deliveryData = [
   { month: "Jan", deliveries: 245, revenue: 12250 },
   { month: "Feb", deliveries: 289, revenue: 14450 },

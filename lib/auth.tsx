@@ -37,6 +37,17 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function useAuth() {
   const context = useContext(AuthContext)
   if (context === undefined) {
+    // During static generation, return a mock context to prevent errors
+    if (typeof window === 'undefined') {
+      return {
+        user: null,
+        loading: true,
+        login: async () => ({ success: false, error: 'Not available during build' }),
+        signup: async () => ({ success: false, error: 'Not available during build' }),
+        logout: () => {},
+        updateProfile: async () => ({ success: false, error: 'Not available during build' }),
+      }
+    }
     throw new Error("useAuth must be used within an AuthProvider")
   }
   return context
